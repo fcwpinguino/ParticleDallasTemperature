@@ -1,9 +1,9 @@
 {
   "name": "spark-dallas-temperature",
-  "author": "Tom de Boer <tom@tomdeboer.nl>",
+  "author": "Cameron Rodriguez <cameron.rodriguez@gmail.com>",
   "license": "MIT",
-  "version": "0.0.5",
-  "description": "A Spark Core ported, but otherwise untouched libary for controlling Dallas Temperature Sensors (DS18B20, DS18S20, DS1822,DS1820)",
+  "version": "0.0.6",
+  "description": "A Photon and Core ported, but otherwise untouched libary for controlling Dallas Temperature Sensors (DS18B20, DS18S20, DS1822,DS1820)",
   "dependencies":{
     "OneWire":  "*"
   }
