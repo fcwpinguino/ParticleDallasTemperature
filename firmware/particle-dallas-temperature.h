@@ -24,7 +24,7 @@
     #include <OneWire.h>
 #elif defined(SPARK) or defined(STM32F10X_MD)
     #include "application.h"
-    #include "../OneWire-Photon/OneWire-Photon.h"
+    #include "../Particle-OneWire/Particle-OneWire.h"
 #endif
 
 
