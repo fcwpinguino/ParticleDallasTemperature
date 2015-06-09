@@ -1,5 +1,5 @@
 {
-  "name": "spark-dallas-temperature",
+  "name": "particle-dallas-temperature",
   "author": "Cameron Rodriguez <cameron.rodriguez@gmail.com>",
   "license": "MIT",
   "version": "0.0.6",
