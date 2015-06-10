@@ -1,5 +1,5 @@
-#include <OneWire.h>
-#include <DallasTemperature.h>
+#include <Particle-OneWire.h>
+#include <particle-dallas-temperature.h>
 
 // Data wire is plugged into port 2 on the Arduino
 #define ONE_WIRE_BUS 2
