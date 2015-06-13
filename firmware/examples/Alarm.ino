@@ -1,8 +1,10 @@
+// This #include statement was automatically added by the Spark IDE.
 #include "Particle-OneWire/Particle-OneWire.h"
+
 #include "particle-dallas-temperature/particle-dallas-temperature.h"
 
 // Data wire is plugged into port 2 on the Arduino
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS D4
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -12,6 +14,67 @@ DallasTemperature sensors(&oneWire);
 
 // arrays to hold device addresses
 DeviceAddress insideThermometer, outsideThermometer;
+
+
+// function to print a device address
+void printAddress(DeviceAddress deviceAddress);
+void printAddress(DeviceAddress deviceAddress)
+{
+  for (uint8_t i = 0; i < 8; i++)
+  {
+    if (deviceAddress[i] < 16) Serial.print("0");
+    Serial.print(deviceAddress[i], HEX);
+  }
+}
+
+// function to print the temperature for a device
+void printTemperature(DeviceAddress deviceAddress);
+void printTemperature(DeviceAddress deviceAddress)
+{
+  float tempC = sensors.getTempC(deviceAddress);
+  Serial.print("Temp C: ");
+  Serial.print(tempC);
+  Serial.print(" Temp F: ");
+  Serial.print(DallasTemperature::toFahrenheit(tempC));
+}
+
+void printAlarms(uint8_t deviceAddress);
+void printAlarms(uint8_t deviceAddress[])
+{
+  char temp;
+  temp = sensors.getHighAlarmTemp(deviceAddress);
+  Serial.print("High Alarm: ");
+  Serial.print(temp, DEC);
+  Serial.print("C/");
+  Serial.print(DallasTemperature::toFahrenheit(temp));
+  Serial.print("F | Low Alarm: ");
+  temp = sensors.getLowAlarmTemp(deviceAddress);
+  Serial.print(temp, DEC);
+  Serial.print("C/");
+  Serial.print(DallasTemperature::toFahrenheit(temp));
+  Serial.print("F");
+}
+
+// main function to print information about a device
+void printData(DeviceAddress deviceAddress);
+void printData(DeviceAddress deviceAddress)
+{
+  Serial.print("Device Address: ");
+  printAddress(deviceAddress);
+  Serial.print(" ");
+  printTemperature(deviceAddress);
+  Serial.println();
+}
+
+void checkAlarm(DeviceAddress deviceAddress);
+void checkAlarm(DeviceAddress deviceAddress)
+{
+  if (sensors.hasAlarm(deviceAddress))
+  {
+    Serial.print("ALARM: ");
+    printData(deviceAddress);
+  }
+}
 
 void setup(void)
 {
@@ -71,60 +134,7 @@ void setup(void)
   Serial.println();
 }
 
-// function to print a device address
-void printAddress(DeviceAddress deviceAddress)
-{
-  for (uint8_t i = 0; i < 8; i++)
-  {
-    if (deviceAddress[i] < 16) Serial.print("0");
-    Serial.print(deviceAddress[i], HEX);
-  }
-}
 
-// function to print the temperature for a device
-void printTemperature(DeviceAddress deviceAddress)
-{
-  float tempC = sensors.getTempC(deviceAddress);
-  Serial.print("Temp C: ");
-  Serial.print(tempC);
-  Serial.print(" Temp F: ");
-  Serial.print(DallasTemperature::toFahrenheit(tempC));
-}
-
-void printAlarms(uint8_t deviceAddress[])
-{
-  char temp;
-  temp = sensors.getHighAlarmTemp(deviceAddress);
-  Serial.print("High Alarm: ");
-  Serial.print(temp, DEC);
-  Serial.print("C/");
-  Serial.print(DallasTemperature::toFahrenheit(temp));
-  Serial.print("F | Low Alarm: ");
-  temp = sensors.getLowAlarmTemp(deviceAddress);
-  Serial.print(temp, DEC);
-  Serial.print("C/");
-  Serial.print(DallasTemperature::toFahrenheit(temp));
-  Serial.print("F");
-}
-
-// main function to print information about a device
-void printData(DeviceAddress deviceAddress)
-{
-  Serial.print("Device Address: ");
-  printAddress(deviceAddress);
-  Serial.print(" ");
-  printTemperature(deviceAddress);
-  Serial.println();
-}
-
-void checkAlarm(DeviceAddress deviceAddress)
-{
-  if (sensors.hasAlarm(deviceAddress))
-  {
-    Serial.print("ALARM: ");
-    printData(deviceAddress);
-  }
-}
 
 void loop(void)
 { 
@@ -159,4 +169,3 @@ void loop(void)
 */
 
 }
-
