@@ -2,7 +2,7 @@
 #include "particle-dallas-temperature/particle-dallas-temperature.h"
 
 // Data wire is plugged into port 2 on the Arduino
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS D4
 #define TEMPERATURE_PRECISION 9
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
@@ -14,6 +14,35 @@ DallasTemperature sensors(&oneWire);
 int numberOfDevices; // Number of temperature devices found
 
 DeviceAddress tempDeviceAddress; // We'll use this variable to store a found device address
+
+// function to print a device address
+void printAddress(DeviceAddress deviceAddress);
+void printAddress(DeviceAddress deviceAddress)
+{
+  for (uint8_t i = 0; i < 8; i++)
+  {
+    if (deviceAddress[i] < 16) Serial.print("0");
+    Serial.print(deviceAddress[i], HEX);
+  }
+}
+
+// function to print the temperature for a device
+void printTemperature(DeviceAddress deviceAddress);
+void printTemperature(DeviceAddress deviceAddress)
+{
+  // method 1 - slower
+  //Serial.print("Temp C: ");
+  //Serial.print(sensors.getTempC(deviceAddress));
+  //Serial.print(" Temp F: ");
+  //Serial.print(sensors.getTempF(deviceAddress)); // Makes a second call to getTempC and then converts to Fahrenheit
+
+  // method 2 - faster
+  float tempC = sensors.getTempC(deviceAddress);
+  Serial.print("Temp C: ");
+  Serial.print(tempC);
+  Serial.print(" Temp F: ");
+  Serial.println(DallasTemperature::toFahrenheit(tempC)); // Converts tempC to Fahrenheit
+}
 
 void setup(void)
 {
@@ -69,23 +98,6 @@ void setup(void)
 
 }
 
-// function to print the temperature for a device
-void printTemperature(DeviceAddress deviceAddress)
-{
-  // method 1 - slower
-  //Serial.print("Temp C: ");
-  //Serial.print(sensors.getTempC(deviceAddress));
-  //Serial.print(" Temp F: ");
-  //Serial.print(sensors.getTempF(deviceAddress)); // Makes a second call to getTempC and then converts to Fahrenheit
-
-  // method 2 - faster
-  float tempC = sensors.getTempC(deviceAddress);
-  Serial.print("Temp C: ");
-  Serial.print(tempC);
-  Serial.print(" Temp F: ");
-  Serial.println(DallasTemperature::toFahrenheit(tempC)); // Converts tempC to Fahrenheit
-}
-
 void loop(void)
 { 
   // call sensors.requestTemperatures() to issue a global temperature 
@@ -110,15 +122,5 @@ void loop(void)
 	} 
 	//else ghost device! Check your power requirements and cabling
 	
-  }
-}
-
-// function to print a device address
-void printAddress(DeviceAddress deviceAddress)
-{
-  for (uint8_t i = 0; i < 8; i++)
-  {
-    if (deviceAddress[i] < 16) Serial.print("0");
-    Serial.print(deviceAddress[i], HEX);
   }
 }
