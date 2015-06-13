@@ -3,7 +3,7 @@
   "author": "Cameron Rodriguez <cameron.rodriguez@gmail.com>",
   "license": "MIT",
   "version": "0.0.6",
-  "description": "A Photon and Core ported, but otherwise untouched libary for controlling Dallas Temperature Sensors (DS18B20, DS18S20, DS1822,DS1820)",
+  "description": "A Photon and Core ported as well as got the examples working, but otherwise untouched libary for controlling Dallas Temperature Sensors (DS18B20, DS18S20, DS1822,DS1820)",
   "dependencies":{
     "OneWire":  "*"
   }
