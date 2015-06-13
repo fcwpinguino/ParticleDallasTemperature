@@ -2,7 +2,7 @@
 #include "particle-dallas-temperature/particle-dallas-temperature.h"
 
 // Data wire is plugged into port 2 on the Arduino
-#define ONE_WIRE_BUS 2
+#define ONE_WIRE_BUS D4
 
 // Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
 OneWire oneWire(ONE_WIRE_BUS);
@@ -14,6 +14,7 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress insideThermometer, outsideThermometer;
 
 // function that will be called when an alarm condition exists during DallasTemperatures::processAlarms();
+void newAlarmHandler(uint8_t* deviceAddress);
 void newAlarmHandler(uint8_t* deviceAddress)
 {
   Serial.println("Alarm Handler Start"); 
@@ -23,6 +24,7 @@ void newAlarmHandler(uint8_t* deviceAddress)
   Serial.println("Alarm Handler Finish");
 }
 
+void printCurrentTemp(DeviceAddress deviceAddress);
 void printCurrentTemp(DeviceAddress deviceAddress)
 {
   printAddress(deviceAddress);
@@ -30,6 +32,7 @@ void printCurrentTemp(DeviceAddress deviceAddress)
   Serial.println();
 }
 
+void printAddress(DeviceAddress deviceAddress);
 void printAddress(DeviceAddress deviceAddress)
 {
   Serial.print("Address: ");
@@ -41,6 +44,7 @@ void printAddress(DeviceAddress deviceAddress)
   Serial.print(" ");
 }
 
+void printTemp(DeviceAddress deviceAddress);
 void printTemp(DeviceAddress deviceAddress)
 {
   float tempC = sensors.getTempC(deviceAddress);
@@ -53,6 +57,7 @@ void printTemp(DeviceAddress deviceAddress)
   Serial.print(" ");
 }
 
+void printAlarmInfo(DeviceAddress deviceAddress);
 void printAlarmInfo(DeviceAddress deviceAddress)
 {
   char temp;
