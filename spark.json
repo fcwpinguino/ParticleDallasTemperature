@@ -1,8 +1,8 @@
 {
   "name": "particle-dallas-temperature",
-  "author": "dude>",
+  "author": "dudea>",
   "license": "MIT",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A Photon and Core ported as well as got the examples working, but otherwise untouched libary for controlling Dallas Temperature Sensors (DS18B20, DS18S20, DS1822,DS1820)",
   "dependencies":{
     "OneWire":  "*"
